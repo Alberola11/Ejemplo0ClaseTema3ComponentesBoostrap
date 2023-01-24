@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <!-- Titulo de mi APP-->
+    <a class="navbar-brand">Mi APP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Primera página-->
+        <li class="nav-item" [routerLinkActive]="['active']"> <!--Esto se hace para que al pulsar se resalte en que parte del navbar nos encontramos -->
+          <a class="nav-link " [routerLink]="['home']" (click)="borrarActive()">Home</a>   <!-- 2.	Para navegar entre los botones del navbar por ejemplo se hace:
+          dentro de navnar.html  Se tiene que poner la que va entre llaves (routerLink)
+          y también dentro de llaves el path que hemos especificado en el routing-module-->
+        </li>
+        <!-- Segunda página-->
+        <li class="nav-item" [ngClass]="claseActive">
+          <a class="nav-link" (click)="navegar()">Articulos</a><!-- esto es para que desde codigo cunao un usuario haga un click se produzaca la navegacion (se podría utilizar para otras cosas) -->
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

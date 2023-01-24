@@ -1,0 +1,112 @@
+<div class="container m-auto">
+  <h1 class="text-center">Mis articulos</h1>
+  <!--Formularios con angular material-->
+
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput #input placeholder="Nombre" maxlength="12" type="email"><!--Con el # le damos el id unico (el nombre le hemos dado imput)-->
+      <mat-hint>Escribe tu nombre {{input.value.length}}//12</mat-hint> <!--Con esto establecemos un contador para que cuente las letras-->
+      <mat-error>El email no es correcto</mat-error>  <!--Se suele utilizar con ngIf y si no es ok mostramos un error-->
+      <mat-error>El campo es obligatorio</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Categoria</mat-label>
+      <mat-select multiple>  <!--si le ponemos multiple podemos selcionar varios-->
+        <mat-option *ngFor="let cat of categoriasList" [value]="cat">  <!--El value para que coja la que seleccionamos-->
+          {{cat}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--Date Picker-->
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de nacimiento:</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <!--Este es el icono del datepicker que al presionar se abrirra el datepicker de arriba -->
+      <mat-datepicker-toggle matIcoSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+    </mat-form-field>
+
+    <section class="example-section">
+      <mat-checkbox class="example-margin">Check me!</mat-checkbox>
+      <mat-checkbox class="example-margin" [disabled]="true">Disabled</mat-checkbox>
+    </section>
+    <mat-radio-group aria-label="Select an option">
+      <mat-radio-button value="1">Option 1</mat-radio-button>
+      <mat-radio-button value="2">Option 2</mat-radio-button>
+    </mat-radio-group>
+
+    <br>
+
+
+  </div>
+
+
+
+
+  <hr>
+
+  <!--Date Picker con rango de fecha-->
+  <mat-form-field appearance="outline">
+    <mat-label>Fecha de nacimiento:</mat-label>
+    <mat-date-range-input [rangePicker]="range">
+      <input matStartDate>
+      <input matEndDate>
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIcoSuffix [for]="range"></mat-datepicker-toggle>
+    <mat-date-range-picker #range ></mat-date-range-picker>
+  </mat-form-field>
+
+  <br>
+
+
+  <!--Tabla de articulos -->
+  <!-- ngFor: me permite pintar tantos elementos como tenga un array
+       ngIf: damos condiciones como los if normales
+        ngSwitch Se comporta como un switch y pinta la etiqueta según el caso concreto-->
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Categorias</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Precio</th>
+      <th scope="col">En venta</th>
+      <th scope="col">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let articulo of articulosList; let i=index">  <!-- Con esto nos imprime la posicion de cada articulo dentro del array-->
+      <th scope="row" [id]="i">{{i}}</th>  <!-- Con el id podemos darle un identificador unico y asi poder dar propiedades unicas en el scss-->
+      <td>{{articulo.nombre}}</td>
+      <td>
+        <ul>
+          <li *ngFor="let categoria of articulo.categorias"> {{categoria}}</li> <!-- Como categoria tambien es un array podemos hacer tambien un ng for para la propiedad categoria-->
+        </ul>
+      </td>
+      <!-- -->
+      <td>{{articulo.stock}}</td>
+      <td>{{articulo.precio}} €</td>
+      <td [ngSwitch]="articulo.enVenta">
+        <p *ngSwitchCase="true" >Si</p>
+        <p *ngSwitchCase="false">No</p>
+        <p *ngSwitchDefault>Default</p>
+      </td>
+
+      <td ><button type="button" class="btn btn-primary" [disabled]="articulo.stock <=0" >Comprar</button></td>
+
+
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4"><!--Que lo ponga en modo grid, el gap es la separacion y que cuando sea md lo ponga en flex-->
+    <button type="button" class="btn btn-success" (click)="addArticulo()">Añadir Artículo</button>
+    <button type="button" class="btn btn-danger" (click) ="removeArticulo()" [disabled]="articulosList.length<=0" >Borrar</button> <!-- No da error pero lo hago para que se desactive el boton cuando el array sea 0-->
+  </div>
+
+</div>
